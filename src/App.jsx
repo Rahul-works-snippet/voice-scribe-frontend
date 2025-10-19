@@ -13,7 +13,9 @@ export default function App() {
   const [history, setHistory] = useState([]);
   const [token, setToken] = useState(null);
 
-  const backendURL = "https://speech-to-text-backend-rzip.onrender.com";
+  const backendURL = "https://voicescribe-backend.onrender.com";
+
+
 
 
   // 🔹 Listen for Supabase auth changes
