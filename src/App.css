@@ -1,182 +1,263 @@
-/* ===== 🎙️ VoiceScribe App Theme ===== */
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
-
-:root {
-  --primary: #2563eb; /* blue-600 */
-  --secondary: #7c3aed; /* purple-600 */
-  --text-light: #f1f5f9;
-  --text-muted: #94a3b8;
-  --bg-dark: #0f172a;
-  --glass: rgba(255, 255, 255, 0.08);
-  --glow: rgba(56, 189, 248, 0.6);
-}
-
-* {
+/* ==================== Root & Global ==================== */
+html, body, #root {
+  height: 100%;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  width: 100%;
+  background: radial-gradient(circle at top left, #1e0a45, #0a1f40 60%, #030712);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: white;
+  overflow-x: hidden;
+  overflow-y: auto;
   font-family: "Poppins", sans-serif;
   scroll-behavior: smooth;
 }
 
-body {
-  background: radial-gradient(circle at top left, var(--primary), var(--secondary));
-  color: var(--text-light);
+/* ==================== Center Container ==================== */
+.app-container {
   min-height: 100vh;
+  padding: 2rem 1rem 5rem;
   display: flex;
   flex-direction: column;
-  animation: fadeIn 0.8s ease-in-out;
-}
-
-/* ===== NAVBAR ===== */
-nav {
-  backdrop-filter: blur(15px);
-  background: rgba(15, 23, 42, 0.6);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 1rem 2rem;
-  font-weight: 600;
-  color: var(--text-light);
-  display: flex;
   align-items: center;
-  justify-content: space-between;
-}
-
-nav h1 {
-  font-size: 1.4rem;
-  letter-spacing: 0.5px;
-}
-
-/* ===== BUTTONS ===== */
-button {
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-button:hover {
-  transform: scale(1.05);
-}
-
-/* ===== GLASS CARD ===== */
-.glass-card {
-  background: var(--glass);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(15px);
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
-  border-radius: 20px;
-  padding: 2rem;
-  transition: all 0.4s ease;
-}
-
-.glass-card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(255, 255, 255, 0.25);
-}
-
-/* ===== INPUTS ===== */
-input[type="email"],
-input[type="text"] {
-  background: rgba(255, 255, 255, 0.9);
-  color: #1e293b;
-  border: none;
-  border-radius: 12px;
-  padding: 12px 16px;
+  justify-content: flex-start;
+  position: relative;
   width: 100%;
-  font-size: 1rem;
-  outline: none;
+  z-index: 1;
+}
+
+/* ==================== Animated Blobs Background ==================== */
+.bg-blobs {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
+  pointer-events: none;
+  transition: background 0.2s ease;
+}
+
+.bg-blobs::before,
+.bg-blobs::after {
+  content: "";
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.5;
+  animation: float 8s ease-in-out infinite;
+}
+
+.bg-blobs::before {
+  background: #51d0de;
+  top: -100px;
+  left: -150px;
+}
+
+.bg-blobs::after {
+  background: #bf4aa8;
+  bottom: -150px;
+  right: -100px;
+  animation-delay: 4s;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-20px) scale(1.05); }
+}
+
+/* ==================== Glass Box ==================== */
+.glass-box {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
   transition: all 0.3s ease;
 }
 
-input:focus {
-  box-shadow: 0 0 0 3px var(--primary);
+.glass-box:hover {
+  box-shadow: 0 0 20px rgba(81, 208, 222, 0.5),
+              0 0 40px rgba(191, 74, 168, 0.4);
+  transform: translateY(-3px);
 }
 
-/* ===== MICROPHONE BUTTON ===== */
-.mic-button {
-  width: 120px;
-  height: 120px;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  border-radius: 50%;
+/* ==================== App Title Gradient ==================== */
+.app-title {
+  display: inline-block;
+  font-weight: 800;
+  background: linear-gradient(90deg, #51d0de, #bf4aa8, #51d0de);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200% auto;
+  animation: gradientFlow 3s linear infinite;
+}
+
+@keyframes gradientFlow {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+/* ==================== Neon Button ==================== */
+.btn-neon {
+  background: linear-gradient(90deg, #51d0de, #bf4aa8);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 0 10px rgba(81, 208, 222, 0.6);
+}
+
+.btn-neon:hover {
+  box-shadow: 0 0 20px rgba(81, 208, 222, 0.9),
+              0 0 40px rgba(191, 74, 168, 0.7);
+  transform: translateY(-2px);
+}
+
+/* ==================== File Input Styling ==================== */
+input[type="file"] {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* ==================== Record & Upload Layout ==================== */
+.record-upload-section {
   display: flex;
+  flex-direction: column; 
   align-items: center;
-  justify-content: center;
-  box-shadow: 0 0 25px var(--glow);
-  animation: pulseGlow 2s infinite;
-  transition: transform 0.3s ease;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 500px;
+  margin-top: 2rem;
 }
 
-.mic-button:hover {
-  transform: scale(1.08);
-}
-
-@keyframes pulseGlow {
-  0% {
-    box-shadow: 0 0 20px var(--glow);
-  }
-  50% {
-    box-shadow: 0 0 40px var(--glow);
-  }
-  100% {
-    box-shadow: 0 0 20px var(--glow);
-  }
-}
-
-/* ===== WAVEFORM ANIMATION ===== */
-.wave {
+.btn-group {
   display: flex;
-  gap: 4px;
-  margin-top: 20px;
+  gap: 0.5rem;
+}
+
+/* ==================== Transcription Box ==================== */
+.transcription-box {
+  width: 100%;
+  max-width: 800px;
+  margin-top: 3rem;
+  padding: 2rem;
+  border-radius: 1.25rem;
+  word-wrap: break-word;
+}
+
+/* ==================== History ==================== */
+.history-box {
+  width: 100%;
+  max-width: 800px;
+  margin-top: 2rem;
+}
+
+/* ==================== Responsive ==================== */
+@media (max-width: 768px) {
+  .record-upload-section { width: 100%; gap: 1rem; }
+  .btn-neon { padding: 8px 16px; }
+}
+/* ================== NEON LIME TITLE ================== */
+.neon-lime {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #a3e635; /* lime */
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow:
+     0 0 5px #a3e635,
+     0 0 10px #a3e635,
+     0 0 20px #a3e635,
+     0 0 40px #84cc16,
+     0 0 80px #65a30d;
+  animation: flicker 1.5s infinite alternate;
+}
+
+/* Optional flicker effect */
+@keyframes flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
+  20%, 24%, 55% { opacity: 0.4; }
+}
+
+/* ================== TRANSCRIBER CONTAINER ================== */
+.record-upload-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 600px;
+  margin: 2rem auto;
+}
+
+/* Buttons inside transcriber */
+.btn-group {
+  display: flex;
+  flex-wrap: wrap;
   justify-content: center;
+  gap: 0.5rem;
 }
 
-.bar {
-  width: 6px;
-  height: 30px;
-  background: var(--text-light);
-  border-radius: 6px;
-  animation: wave 1.2s infinite ease-in-out;
+/* Waveform canvas styling */
+.waveform-canvas {
+  border-radius: 0.5rem;
+  background: linear-gradient(to right, #1e293b, #0f172a);
+  width: 100%;
+  height: 120px;
 }
 
-.bar:nth-child(2) {
-  animation-delay: 0.1s;
+/* History heading & list */
+.history-button {
+  display: block;
+  margin: 2rem auto 1rem;
+  background: linear-gradient(90deg, #51d0de, #bf4aa8);
+  color: white;
+  border-radius: 10px;
+  padding: 12px 24px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(81, 208, 222, 0.6);
 }
-.bar:nth-child(3) {
-  animation-delay: 0.2s;
-}
-.bar:nth-child(4) {
-  animation-delay: 0.3s;
-}
-.bar:nth-child(5) {
-  animation-delay: 0.4s;
+.history-button:hover {
+  box-shadow: 0 0 20px rgba(81, 208, 222, 0.9),
+              0 0 40px rgba(191, 74, 168, 0.7);
+  transform: translateY(-3px);
 }
 
-@keyframes wave {
-  0%, 100% {
-    transform: scaleY(0.6);
-    opacity: 0.7;
+/* History cards */
+.history-card {
+  background: rgba(51, 65, 85, 0.6);
+  padding: 1rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  transition: all 0.2s ease;
+}
+.history-card:hover {
+  background: rgba(51, 65, 85, 0.85);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+}
+
+/* Responsive fixes */
+@media (max-width: 640px) {
+  .record-upload-section {
+    width: 100%;
+    gap: 1rem;
   }
-  50% {
-    transform: scaleY(1.4);
-    opacity: 1;
+  .neon-lime {
+    font-size: 1.8rem;
   }
-}
-
-/* ===== FADE-IN ===== */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* ===== FOOTER ===== */
-footer {
-  margin-top: auto;
-  text-align: center;
-  font-size: 0.9rem;
-  color: var(--text-muted);
-  padding: 1.5rem;
 }

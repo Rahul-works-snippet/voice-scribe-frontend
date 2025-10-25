@@ -1,76 +1,52 @@
-import { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { supabase } from "../supabaseClient";
 
-export default function Auth() {
+function Auth() {
   const [email, setEmail] = useState("");
-  const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-
-  // 🔹 Redirect if already logged in
-  useEffect(() => {
-    const checkSession = async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-      if (session) {
-        window.location.href = "/dashboard"; // change to your main app route
-      }
-    };
-    checkSession();
-
-    // 🔹 Listen for magic link login
-    const { data: listener } = supabase.auth.onAuthStateChange(
-      (_event, session) => {
-        if (session) {
-          window.location.href = "/dashboard"; // redirect after login
-        }
-      }
-    );
-
-    return () => listener.subscription.unsubscribe();
-  }, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    setMessage("");
+    setMessage("Sending magic link... ✉️");
 
     const { error } = await supabase.auth.signInWithOtp({ email });
 
-    if (error) setMessage(`❌ ${error.message}`);
-    else
-      setMessage(
-        `✅ Check your email (${email}) for the magic login link!`
-      );
-
-    setLoading(false);
+    if (error) {
+      setMessage(`Error: ${error.message}`);
+    } else {
+      setMessage("✅ Check your email for the magic link!");
+    }
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-blue-900 to-purple-900 text-white px-4">
-      <div className="bg-gray-800 p-8 rounded-2xl shadow-2xl w-full max-w-md text-center border border-blue-400">
-        <h1 className="text-3xl font-bold mb-6 text-blue-400">
-          🔐 Login / Sign Up
-        </h1>
-        <form onSubmit={handleLogin} className="flex flex-col gap-4">
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-slate-900 via-indigo-900 to-slate-800 text-slate-100">
+      <div className="bg-slate-900/60 backdrop-blur-lg border border-slate-700 p-8 rounded-2xl shadow-lg w-full max-w-md text-center">
+        <h1 className="text-3xl font-bold mb-4">🎙️ VoiceScribe</h1>
+        <p className="text-slate-300 mb-6">
+          Enter your email below to receive a magic sign-in link.
+        </p>
+
+        <form onSubmit={handleLogin} className="space-y-4">
           <input
             type="email"
             placeholder="Enter your email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="p-3 rounded-md bg-gray-700 text-white text-center focus:ring-2 focus:ring-blue-500"
             required
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full px-4 py-3 rounded-lg bg-slate-800 border border-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-100 placeholder-slate-400"
           />
           <button
             type="submit"
-            disabled={loading}
-            className="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-md font-semibold transition-all"
+            className="btn-gradient w-full py-3 rounded-lg text-white font-semibold text-lg shadow-lg transition-all hover:scale-105"
           >
-            {loading ? "Sending..." : "Send Magic Link"}
+            ✉️ Send Magic Link
           </button>
         </form>
-        {message && <p className="mt-4 text-green-400 text-sm">{message}</p>}
+
+        {message && <p className="mt-4 text-sm text-slate-300">{message}</p>}
       </div>
     </div>
   );
 }
+
+export default Auth;

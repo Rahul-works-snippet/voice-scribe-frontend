@@ -1,24 +1,190 @@
+/* ================== Tailwind ================== */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: "Inter", sans-serif;
+/* ================== GLOBAL ================== */
+html, body {
+  height: 100%;
   margin: 0;
-  background-color: #0f172a;
+  padding: 0;
+  font-family: "Inter", sans-serif;
+  scroll-behavior: smooth;
+  background: linear-gradient(to bottom right, #0f172a, #1e1b4b, #312e81);
   color: #f8fafc;
 }
 
-button {
+/* Smooth scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+::-webkit-scrollbar-thumb {
+  background: #3b82f6;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2563eb;
+}
+
+/* Links */
+a {
+  color: #3b82f6;
+  transition: color 0.2s;
+}
+a:hover {
+  color: #60a5fa;
+}
+
+/* Inputs */
+input, button, select, textarea {
+  font-family: inherit;
+  outline: none;
+}
+
+/* ================== GLASS CARD ================== */
+.glass-card {
+  background: rgba(30, 41, 59, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(100, 116, 139, 0.3);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.glass-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4);
+}
+
+/* ================== BUTTONS ================== */
+.btn-gradient {
+  background: linear-gradient(90deg, #ec4899, #f97316);
+  color: white;
+  font-weight: 600;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+.btn-gradient:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(255, 115, 0, 0.3);
+}
+
+.btn-green {
+  background: linear-gradient(90deg, #10b981, #059669);
+}
+.btn-green:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
+
+.btn-red {
+  background: linear-gradient(90deg, #ef4444, #dc2626);
+}
+.btn-red:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
+
+/* ================== RECORDING GLOW ================== */
+.recording-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(12px);
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+/* ================== AUDIO WAVEFORM ================== */
+.waveform-canvas {
+  border-radius: 0.5rem;
+  background: linear-gradient(to right, #1e293b, #0f172a);
+}
+
+/* ================== NAVBAR ================== */
+.navbar {
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid #334155;
+  padding: 1rem 1.5rem;
+}
+
+/* Logout button */
+.logout-btn {
+  background-color: #dc2626;
+  color: white;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
   transition: all 0.2s ease;
 }
-
-input[type="file"] {
-  background-color: #f8fafc;
-  border-radius: 6px;
-  padding: 0.5rem;
+.logout-btn:hover {
+  background-color: #b91c1c;
+  transform: scale(1.05);
 }
 
-canvas {
-  border-radius: 8px;
+/* ================== TRANSCRIPTION CARD ================== */
+.transcription-card {
+  background: rgba(51, 65, 85, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(100, 116, 139, 0.3);
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+}
+
+/* History card hover */
+.history-card:hover {
+  background: rgba(51, 65, 85, 0.85);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* Small helpers */
+.hidden { display: none; }
+.text-gradient {
+  background: linear-gradient(90deg, #ec4899, #8b5cf6, #3b82f6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+/* ================== NEON LIME TITLE ================== */
+.neon-lime {
+  font-size: 2.5rem; /* adjust size */
+  font-weight: 800;
+  color: #a3e635; /* lime */
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow:
+     0 0 5px #a3e635,
+     0 0 10px #a3e635,
+     0 0 20px #a3e635,
+     0 0 40px #84cc16,
+     0 0 80px #65a30d;
+  animation: flicker 1.5s infinite alternate;
+}
+
+/* Optional flicker effect */
+@keyframes flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    opacity: 1;
+  }
+  20%, 24%, 55% {
+    opacity: 0.4;
+  }
+}
+
+/* Responsive fixes */
+@media (max-width: 640px) {
+  .btn-gradient, .btn-green, .btn-red {
+    width: 100%;
+    text-align: center;
+  }
+  nav {
+    flex-direction: column;
+    gap: 10px;
+  }
 }
