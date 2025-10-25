@@ -40,15 +40,17 @@ function App() {
     <div className="app-container">
       <div className="bg-blobs"></div>
 
+      {/* Navbar */}
       <nav className="glass-box w-full flex justify-between items-center px-6 py-4 mb-6">
-        <h1 className="app-title text-2xl">🎙️ VoiceScribe</h1>
+        <h1 className="app-title text-2xl">🎙️ VoiceScribe 2025</h1>
         <div className="flex items-center gap-4">
           <span className="text-gray-200">{session.user?.email}</span>
           <button onClick={handleLogout} className="btn-neon">Logout</button>
         </div>
       </nav>
 
-      <Transcriber backendURL="http://localhost:5000/api" />
+      {/* Transcriber Component */}
+      <Transcriber backendURL={import.meta.env.VITE_BACKEND_URL} />
     </div>
   );
 }

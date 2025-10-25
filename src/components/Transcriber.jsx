@@ -13,7 +13,8 @@ export default function Transcriber() {
   const audioChunksRef = useRef([]);
   const audioPreviewRef = useRef(null);
 
-  const backendURL = "http://localhost:5000/api"; // replace with your deployed server
+  const API_BASE_URL = "https://voice-scribe-backend.onrender.com";
+ // replace with your deployed server
 
   // Fetch transcription history
   useEffect(() => {
