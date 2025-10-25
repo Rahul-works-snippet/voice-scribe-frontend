@@ -1,10 +1,34 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "../supabaseClient";
 
 export default function Auth() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+
+  // 🔹 Redirect if already logged in
+  useEffect(() => {
+    const checkSession = async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      if (session) {
+        window.location.href = "/dashboard"; // change to your main app route
+      }
+    };
+    checkSession();
+
+    // 🔹 Listen for magic link login
+    const { data: listener } = supabase.auth.onAuthStateChange(
+      (_event, session) => {
+        if (session) {
+          window.location.href = "/dashboard"; // redirect after login
+        }
+      }
+    );
+
+    return () => listener.subscription.unsubscribe();
+  }, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -13,18 +37,21 @@ export default function Auth() {
 
     const { error } = await supabase.auth.signInWithOtp({ email });
 
-    if (error) {
-      setMessage(error.message);
-    } else {
-      setMessage(`✅ Check your email (${email}) for the magic login link!`);
-    }
+    if (error) setMessage(`❌ ${error.message}`);
+    else
+      setMessage(
+        `✅ Check your email (${email}) for the magic login link!`
+      );
+
     setLoading(false);
   };
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-blue-900 to-purple-900 text-white px-4">
       <div className="bg-gray-800 p-8 rounded-2xl shadow-2xl w-full max-w-md text-center border border-blue-400">
-        <h1 className="text-3xl font-bold mb-6 text-blue-400">🔐 Login / Sign Up</h1>
+        <h1 className="text-3xl font-bold mb-6 text-blue-400">
+          🔐 Login / Sign Up
+        </h1>
         <form onSubmit={handleLogin} className="flex flex-col gap-4">
           <input
             type="email"

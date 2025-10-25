@@ -1,10 +1,10 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 
-// ✅ Vite + React config for Netlify
 export default defineConfig({
   plugins: [react()],
-  build: {
-    outDir: 'dist', // Netlify publish folder
+  server: {
+    port: 5173,
+    strictPort: true,
   },
 });

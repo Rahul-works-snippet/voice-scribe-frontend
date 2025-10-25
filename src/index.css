@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  font-family: "Inter", sans-serif;
+  margin: 0;
+  background-color: #0f172a;
+  color: #f8fafc;
+}
+
+button {
+  transition: all 0.2s ease;
+}
+
+input[type="file"] {
+  background-color: #f8fafc;
+  border-radius: 6px;
+  padding: 0.5rem;
+}
+
+canvas {
+  border-radius: 8px;
+}
